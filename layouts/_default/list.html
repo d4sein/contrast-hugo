@@ -10,13 +10,32 @@
   <meta property="og:url" content="{{ .Permalink }}" charset="utf-8">
   <meta name="author" content="{{ .Site.Params.author }}">
 </head>
-
 {{ $Pages := .Pages }}
 
 {{ if .IsHome }}
-  {{ $Pages = where site.RegularPages "Type" "in" .Site.Params.mainSections }}
   {{ with .GetPage "/projetos" }}
-    {{ .Render }}
+  <article>
+    {{- range .Pages }}
+    {{ if eq .Params.Section "projects" }}
+      <ul class="project">
+        <li class="title">{{ .Title }}</li>
+        <span class="description">{{ .Content }}</span>
+        <ul>
+          <li>Fonte: <a href="{{ .Params.Source }}" target="_blank">{{ .Params.Source }}</a> {{ .Params.Technologies }}</li>
+          <li>Licença: 
+            {{ if eq .Params.License "The Unlicense"}}
+            <a href="https://choosealicense.com/licenses/unlicense/" target="_blank">
+            {{ else if eq .Params.License "MIT"}}
+            <a href="https://choosealicense.com/licenses/mit/" target="_blank">
+            {{ else }}
+            <a href="#">
+            {{ end }}
+            {{ .Params.License }}</a></li>
+        </ul>
+      </ul>
+      {{ end }}
+      <br>
+    {{ end }}
   {{ end }}
 {{ else }}
 
@@ -36,7 +55,6 @@
 {{- end }}
 
 {{ else }}
-
 <article>
   {{- range $Pages }}
   {{ if eq .Params.Section "projects" }}
