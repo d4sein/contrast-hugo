@@ -2,9 +2,7 @@
 <html lang="{{ .Site.LanguageCode | default "en" }}">
 <title>{{ if and .Title (not (eq .Title .Site.Title)) }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
 {{ hugo.Generator }}
-{{- if or .Description .Site.Params.description }}
-<meta name="description" content="{{ .Description | default .Site.Params.description }}">
-{{- end }}
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{{ .Site.BaseURL }}css/index.css">
 <link rel="stylesheet" href="{{ .Site.BaseURL }}css/classes.css">
