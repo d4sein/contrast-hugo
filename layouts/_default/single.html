@@ -1,0 +1,26 @@
+{{ define "main" }}
+<head>
+  <meta property="og:title" content="{{ .Params.title }}">
+  <meta property="og:description" content="{{ or .Params.description " " }}" charset="utf-8">
+  <meta property="og:image" content="{{ or .Params.cover .Site.Params.defaultCover }}" charset="utf-8">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:type" content="Blog" charset="utf-8">
+  <meta name="author" content="{{ .Site.Params.author }}">
+</head>
+
+<article>
+  <header>
+    {{ range $index, $tag := .Params.categories }}
+      {{- if gt $index 0 }}, {{ end -}}
+      <a href="{{ ($.Site.GetPage (printf "/%s/%s" "categories" $tag)).Permalink }}">{{ $tag | upper }}</a>
+    {{- end -}}
+    <h1>{{ .Title }}</h1>
+    {{ $month_names := slice "Janeiro" "Fevereiro" "Março" "Abril" "Maio" "Junho" "Julho" "Agosto" "Setembro" "Outubro" "Novembro" "Dezembro" }}
+    {{ $month := sub .Date.Month 1 }}
+    
+    {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Day }} de {{ index $month_names $month }}, {{ .Date.Year }}</time>{{ end }}
+  </header>
+  {{ .Content }}
+</article>
+
+{{ end }}
